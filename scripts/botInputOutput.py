@@ -3,6 +3,8 @@ import rospy
 import serial
 import time
 import struct
+import sys
+
 from fb5_torque_ctrl.msg import PwmInput
 from fb5_torque_ctrl.msg import encoderData
 ser=serial.Serial('/dev/ttyUSB0',9600)

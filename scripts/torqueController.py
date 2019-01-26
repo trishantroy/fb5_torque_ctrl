@@ -18,7 +18,7 @@ wLprev=0
 wdotRprev=0
 wdotLprev=0
 N_bots=4
-bot_loc=np.empty((2,N_bots));
+# bot_loc=np.empty((2,N_bots));
 BotNumber=0 #<----This has to be modified in each bot. [0,1,2,3]
 
 #The experimental data is added to the data.csv file
@@ -44,18 +44,18 @@ def callbackEnc(data):
 	
 	duration=0.04 #25 Hz. This number is actually determined by the rate at which the bot sends data over serial. It has  been set at 25 hz so this maybe used blindly.
 	wR=(data.encoderR-encRPrev)*2*math.pi/30/duration
-    wL=(data.encoderL-encLPrev)*2*math.pi/30/duration
-    wdotR=(wR-wRprev)/duration
-    wdotL=(wL-wLprev)/duration
-    wddotR=(wdotR-wdotRprev)/duration
-    wddotL=(wdotL-wdotLprev)/duration
+	wL=(data.encoderL-encLPrev)*2*math.pi/30/duration
+	wdotR=(wR-wRprev)/duration
+	wdotL=(wL-wLprev)/duration
+	wddotR=(wdotR-wdotRprev)/duration
+	wddotL=(wdotL-wdotLprev)/duration
 	encRPrev=data.encoderR
 	encLPrev=data.encoderL
 	wRprev=wR
 	wLprev=wL
 	wdotRprev=wdotR
 	wdotLprev=wdotL
-    #logTime=rospy.get_time()-codeStartTime
+	#logTime=rospy.get_time()-codeStartTime
         #row=[logTime,data.interval,data.encoderR,data.encoderL,wR,wL,wdotR,wdotL,wddotR,wddotL,pwmInput.rightInput,pwmInput.leftInput]
         #with open('data.csv','ab') as myfile:
                 #writer=csv.writer(myfile)
@@ -70,7 +70,7 @@ def callbackVICON(data,arg):
 	#Temporary shiz
 	bot_loc[:,bot_index]=(data.transform.translation.x,data.transform.translation.y);
 	
-	if arg==BotNumber:
+	#if arg==BotNumber:
 		#Compute Voronoi Partitions here.
 		
 
@@ -78,7 +78,7 @@ def torqueController():
 	global pwmInput
 	global codeStartTime
 	rospy.init_node('torqueController',anonymous=True)
-    rospy.Subscriber('encoderData', encoderData, callbackEnc)
+	rospy.Subscriber('encoderData', encoderData, callbackEnc)
 	pub_PWM=rospy.Publisher('pwmCmd',PwmInput,queue_size=10)
     #The torque controller outputs commands at only 10Hz.
 
